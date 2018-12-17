@@ -137,7 +137,7 @@ class Chrome
             $this->getTabs();
         }
         $wsUrl = $this->getWsUrl($tab);
-        $this->close();
+        $this->closeClient();
         $this->wsClient = $this->getWsClient($wsUrl);
         $this->wsClient->setTimeout($this->timeout);
     }
@@ -150,7 +150,7 @@ class Chrome
     /**
      * Close socket
      */
-    public function close()
+    public function closeClient()
     {
         if ($this->wsClient) {
             $this->wsClient->close();
