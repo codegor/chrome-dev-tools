@@ -218,7 +218,7 @@ class Chrome
      */
     public function waitMessage($timeout = null)
     {
-        $timeout = $timeout?? $this->timeout;
+        $timeout = $timeout ? $timeout : $this->timeout;
         $this->wsClient->setTimeout($timeout);
         try {
             $message = $this->wsClient->receive();
@@ -238,7 +238,7 @@ class Chrome
      */
     public function waitEvent($eventName, $timeout = null)
     {
-        $timeout = $timeout?? $this->timeout;
+        $timeout = $timeout ? $timeout : $this->timeout;
         $startTime = time();
         $messages = [];
         $matchingMessage = null;
@@ -269,7 +269,7 @@ class Chrome
      */
     public function waitResult($resultId, $timeout = null)
     {
-        $timeout = $timeout?? $this->timeout;
+        $timeout = $timeout ? $timeout : $this->timeout;
         $startTime = time();
         $result = null;
         while (true) {
@@ -296,6 +296,6 @@ class Chrome
      */
     protected function getWsUrl($tab)
     {
-        return $this->tabs[$tab]['webSocketDebuggerUrl']?? null;
+        return $this->tabs[$tab]['webSocketDebuggerUrl'] ? $this->tabs[$tab]['webSocketDebuggerUrl'] : null;
     }
 }
