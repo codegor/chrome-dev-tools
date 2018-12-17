@@ -110,6 +110,8 @@
      */
     private $timeout;
     
+    private $pageClosed = false;
+    
     /**
      * Chrome constructor.
      * @param string $host
@@ -124,6 +126,11 @@
       $this->timeout = $timeout;
       $this->connect();
     }
+  
+    public function __destruct() {
+      if(!$this->pageClosed)
+        $this->Page->close();
+    }
     
     /**
      * Connect to $tab
@@ -131,7 +138,6 @@
      * @param bool $updateTabs
      */
     public function connect() {
-      // You should always send command Page.close after your work, becouse every cration will be new tab in chrome and may be memmory leack
       $newPage = $this->getNewPage();
       if(!isset($newPage['webSocketDebuggerUrl'])) throw new \Exception('Chrome: cannot create new page');
       $wsUrl = $newPage['webSocketDebuggerUrl'];
@@ -206,6 +212,10 @@
         'method' => $this->currentDomain . '.' . $name,
         'id'     => $this->messageId
       ];
+      
+      if('Page.close' == $payload['method'])
+        $this->pageClosed = true;
+      
       if (!empty($arguments)) {
         $payload['params'] = $arguments[0];
       }
