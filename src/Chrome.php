@@ -158,6 +158,13 @@
         $this->wsClient->close();
       }
     }
+  
+    /**
+     * Set timeout
+     */
+    public function setTimeout($timeout) {
+      $this->timeout = $timeout;
+    }
     
     public function getNewPage() {
       $endpoint = sprintf('http://%s:%s/json/new', $this->host, $this->port);
